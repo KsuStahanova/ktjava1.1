@@ -1,0 +1,88 @@
+public class Order {
+    private int orderId;
+    private Date orderDate;
+   
+}
+
+public class Invoice {
+    private int invoiceId;
+    private Date invoiceDate;
+    
+}
+
+public class Payment {
+    private int paymentId;
+    private Date paymentDate;
+  
+}
+
+public class Waybill {
+    private int waybillId;
+    private Date waybillDate;
+    
+}
+
+public interface OrderRepository {
+    void saveOrder(Order order);
+    Order getOrderById(int orderId);
+   
+}
+
+public interface InvoiceRepository {
+    void saveInvoice(Invoice invoice);
+    Invoice getInvoiceById(int invoiceId);
+    
+}
+
+public interface PaymentRepository {
+    void savePayment(Payment payment);
+    Payment getPaymentById(int paymentId);
+   
+}
+
+public interface WaybillRepository {
+    void saveWaybill(Waybill waybill);
+    Waybill getWaybillById(int waybillId);
+    
+}
+
+// взаимодействия с консолью:
+@Service
+public class ConsoleService {
+    private final OrderRepository orderRepository;
+    private final InvoiceRepository invoiceRepository;
+    private final PaymentRepository paymentRepository;
+    private final WaybillRepository waybillRepository;
+
+}
+//Конфигурир Spring Beans:
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public OrderRepository orderRepository() {
+        return new OrderRepositoryImpl(); 
+    }
+
+    @Bean
+    public InvoiceRepository invoiceRepository() {
+        return new InvoiceRepositoryImpl(); 
+
+    @Bean
+    public PaymentRepository paymentRepository() {
+        return new PaymentRepositoryImpl(); 
+    }
+
+    @Bean
+    public WaybillRepository waybillRepository() {
+        return new WaybillRepositoryImpl();
+    }
+}
+
+//Создаем класс для запуска приложения:
+public class Application {
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        
+    }
+}
