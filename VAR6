@@ -1,0 +1,107 @@
+public class Order {
+    private int orderId;
+    private String customerName;
+    private List<Invoice> invoices;
+
+}
+
+public class Invoice {
+    private int invoiceId;
+    private double amount;
+    private Date date;
+    private Payment payment;
+
+}
+
+public class Payment {
+    private int paymentId;
+    private double amount;
+    private Date date;
+
+ 
+}
+
+public class Waybill {
+    private int waybillId;
+    private Date date;
+    private List<Invoice> invoices;
+
+   
+}
+
+public class DocumentService {
+    private List<Order> orders;
+
+    public DocumentService() {
+        this.orders = new ArrayList<>();
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
+
+    public Order getOrderById(int orderId) {
+        for (Order order : orders) {
+            if (order.getOrderId() == orderId) {
+                return order;
+            }
+        }
+        return null;
+    }
+
+
+}
+
+import java.util.Date;
+
+public class Main {
+    public static void main(String[] args) {
+        DocumentService documentService = new DocumentService();
+
+        
+        Order order = new Order();
+        order.setOrderId(1);
+        order.setCustomerName("");
+
+        
+        Invoice invoice = new Invoice();
+        invoice.setInvoiceId(1);
+        invoice.setAmount(100.0);
+        invoice.setDate(new Date());
+        order.getInvoices().add(invoice);
+
+       
+        Payment payment = new Payment();
+        payment.setPaymentId(1);
+        payment.setAmount(100.0);
+        payment.setDate(new Date());
+        invoice.setPayment(payment);
+
+        Waybill waybill = new Waybill();
+        waybill.setWaybillId(1);
+        waybill.setDate(new Date());
+        waybill.getInvoices().add(invoice);
+
+       
+        documentService.addOrder(order);
+
+       
+        Order retrievedOrder = documentService.getOrderById(1);
+        System.out.println("Customer: " + retrievedOrder.getCustomerName());
+        for (Invoice inv : retrievedOrder.getInvoices()) {
+            System.out.println("Invoice ID: " + inv.getInvoiceId() + ", Amount: " + inv.getAmount() + ", Date: " + inv.getDate());
+            if (inv.getPayment() != null) {
+                System.out.println("Payment ID: " + inv.getPayment().getPaymentId() + ", Amount: " + inv.getPayment().getAmount() + ", Date: " + inv.getPayment().getDate());
+            }
+        }
+        for (Waybill wb : waybill.getInvoices()) {
+            System.out.println("Waybill ID: " + waybill.getWaybillId() + ", Date: " + waybill.getDate());
+        }
+    }
+}
+
+
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.7</version>
+</dependency>
