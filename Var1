@@ -1,0 +1,120 @@
+Order.java
+
+public class Order {
+    private int orderId;
+    private String customerName;
+    private List<Invoice> invoices = new ArrayList<>();
+    // добавьте необходимые методы
+}
+Invoice.java
+
+public class Invoice {
+    private int invoiceId;
+    private Date date;
+    private double amount;
+    private List<Payment> payments = new ArrayList<>();
+    // добавьте необходимые методы
+}
+Payment.java
+
+public class Payment {
+    private int paymentId;
+    private Date date;
+    private double amount;
+    // добавьте необходимые методы
+}
+Waybill.java
+
+public class Waybill {
+    private int waybillId;
+    private Date date;
+    private List<Order> orders = new ArrayList<>();
+    // добавьте необходимые методы
+}
+
+
+@Component
+public class App {
+
+    private List<Order> orders = new ArrayList<>();
+    private List<Invoice> invoices = new ArrayList<>();
+    private List<Payment> payments = new ArrayList<>();
+    private List<Waybill> waybills = new ArrayList<>();
+
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
+
+    public void addInvoice(Invoice invoice) {
+        invoices.add(invoice);
+    }
+
+    public void addPayment(Payment payment) {
+        payments.add(payment);
+    }
+
+    public void addWaybill(Waybill waybill) {
+        waybills.add(waybill);
+    }
+
+    // добавьте методы для ввода данных с консоли
+}
+Создайте конфигурационный класс для Spring:
+AppConfig.java
+
+@Configuration
+@ComponentScan(basePackages = "your.package")
+public class AppConfig {
+
+    @Bean
+    public App app() {
+        return new App();
+    }
+}
+Maven  класс для запуска приложения:
+Main.java
+
+public class Main {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        App app = ctx.getBean(App.class);
+
+      
+
+        ctx.close();
+    }
+}
+
+ метод main:
+
+public class Main {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        App app = ctx.getBean(App.class);
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Введите информацию о заказе:");
+        Order order = new Order();
+        // Логика для ввода данных о заказе через консоль
+        
+        System.out.println("Введите информацию о счете:");
+        Invoice invoice = new Invoice();
+        // Логика для ввода данных о счете через консоль
+        
+        System.out.println("Введите информацию об оплате:");
+        Payment payment = new Payment();
+        // Логика для ввода данных об оплате через консоль
+        
+        System.out.println("Введите информацию о накладной:");
+        Waybill waybill = new Waybill();
+        // Логика для ввода данных о накладной через консоль
+        
+        app.addOrder(order);
+        app.addInvoice(invoice);
+        app.addPayment(payment);
+        app.addWaybill(waybill);
+        
+        ctx.close();
+    }
+}
